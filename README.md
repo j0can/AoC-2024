@@ -1,4 +1,4 @@
 # AoC-2024
-adventofcode.com
+adventofcode
 
 My solutions for each puzzle
