@@ -1,16 +1,55 @@
-import re
+def read_file(prompt):  
+    with open(prompt, "r") as file:
+       content = file.read()
+    return content
 
-# Your input (use your actual input string here)
-with open('values.txt', 'r') as file:
-    puzzle_input = file.read
+def problem1():
+    import re
 
-# Regular expression to find valid `mul(X,Y)` patterns
-pattern = r"mul\((\d+),(\d+)\)"
+    pattern = r"mul\((\d+),(\d+)\)"
 
-# Find all matches
-matches = re.findall(pattern, puzzle_input)
+    content = read_file("values.txt")
 
-# Compute the sum of the multiplications
-result = sum(int(x) * int(y) for x, y in matches)
+    matches = re.findall(pattern, content)
 
-print(f"The sum of all valid mul(X,Y) results is: {result}")
+    ans =0
+    for match in matches:
+        x,y = map(int,match)
+        product = x * y
+        ans += product
+    
+    print(ans)
+
+def problem2():
+    import re
+
+    mul_pattern = r"mul\((\d+),(\d+)\)"  
+    do_pattern = r"do\(\)"               
+    dont_pattern = r"don't\(\)"
+
+    pattern = r"mul\((\d+),(\d+)\)"
+
+    content = read_file("values.txt")
+
+    mul_enabled = True
+    ans = 0
+
+    tokens = re.split(r"(\bdo\(\)|\bdon't\(\)|mul\(\d+,\d+\))", content)
+
+    for token in tokens:
+        token = token.strip()
+        if not token:
+            continue
+
+        if re.fullmatch(do_pattern, token):
+            mul_enabled = True
+        elif re.fullmatch(dont_pattern, token):
+            mul_enabled = False
+        elif mul_enabled and re.fullmatch(mul_pattern, token):
+            x, y = map(int, re.findall(r"\d+", token))
+            product = x * y
+            ans += product
+    print(ans)
+
+problem1()
+problem2()
