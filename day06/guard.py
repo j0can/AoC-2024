@@ -51,6 +51,4 @@ for o_r in range(rows):
         if grid[o_r][o_c] == '.' and (o_r, o_c) != (start_r, start_c):
             if simulate_guard(o_r, o_c):
                 valid_positions += 1
-
-# Output results
 print_and_copy(valid_positions)
